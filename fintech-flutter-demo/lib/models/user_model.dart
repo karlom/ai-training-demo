@@ -8,10 +8,27 @@ class User {
   User({required this.id, required this.username, required this.balance});
 
   factory User.fromJson(Map<String, dynamic> json) {
+    // 安全处理null值，确保所有必需字段都存在
+    if (json['id'] == null ||
+        json['username'] == null ||
+        json['balance'] == null) {
+      throw FormatException('Invalid user data: missing required fields', json);
+    }
+
     return User(
-      id: json['id'],
-      username: json['username'],
-      balance: json['balance'].toDouble(),
+      id: json['id'] is int ? json['id'] : (json['id'] as num).toInt(),
+      username: json['username'] as String,
+      balance: json['balance'] is double
+          ? json['balance'] as double
+          : (json['balance'] as num).toDouble(),
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'username': username,
+      'balance': balance,
+    };
   }
 }
