@@ -115,6 +115,12 @@ start_frontend() {
     echo "[Frontend] Installing dependencies..."
     flutter pub get
 
+    # Prepare macOS platform files (generate ephemeral directory)
+    echo "[Frontend] Preparing macOS platform files..."
+    flutter create . --platforms=macos 2>/dev/null || true
+    # Trigger ephemeral file generation (ignore failures due to arch issues)
+    flutter build macos --debug 2>/dev/null || true
+
     # Build with Xcode for x86_64 architecture (Rosetta compatibility)
     echo "[Frontend] Building macOS app..."
     cd macos
