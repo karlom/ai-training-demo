@@ -60,8 +60,28 @@ ai-training-demo/
 - **前端**:
   - Flutter SDK 2.17.0 或更高版本
   - Dart SDK
+  - Xcode (macOS)
 
-### 后端启动步骤
+### 一键启动（推荐）
+
+在项目根目录运行以下命令，自动启动前后端：
+
+```bash
+./start.sh
+```
+
+该脚本会自动：
+1. 检查环境依赖（Java, Maven, Flutter）
+2. 启动 Spring Boot 后端服务（http://localhost:8080）
+3. 构建并启动 Flutter macOS 前端应用
+
+按 `Ctrl+C` 停止所有服务。
+
+---
+
+### 分步启动
+
+#### 后端启动步骤
 
 1. 进入后端项目目录：
 ```bash
@@ -86,7 +106,7 @@ mvn spring-boot:run
    - 用户名: `sa`
    - 密码: (留空)
 
-### 前端启动步骤
+#### 前端启动步骤
 
 1. 进入前端项目目录：
 ```bash
