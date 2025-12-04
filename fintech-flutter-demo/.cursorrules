@@ -1,0 +1,90 @@
+# Fintech Flutter 项目规则
+
+## 项目概述
+这是一个金融科技演示项目的 Flutter 客户端，主要运行在 macOS 桌面平台。
+
+## 技术栈
+- Flutter 3.x
+- Dart
+- http 包（网络请求）
+- macOS 桌面应用
+
+## 项目结构
+```
+lib/
+├── main.dart           # 应用入口
+├── models/             # 数据模型
+│   └── user_model.dart
+├── screens/            # 页面/视图
+│   └── user_profile_page.dart
+└── services/           # 服务层（API 调用）
+    └── user_service.dart
+```
+
+## 编码规范
+
+### Dart 代码风格
+- 使用小驼峰命名法（camelCase）
+- 类名使用大驼峰（PascalCase）
+- 文件名使用小写下划线（snake_case）
+- 私有成员使用下划线前缀（`_privateVar`）
+
+### 模型类规范
+- 使用 `factory` 构造函数实现 `fromJson`
+- 提供 `toJson` 方法用于序列化
+- 字段名与后端 API 返回的 JSON 键名一致（驼峰）
+- 处理可能为 null 的字段，提供默认值
+
+### Widget 规范
+- StatefulWidget 用于需要状态管理的页面
+- StatelessWidget 用于纯展示组件
+- 使用 `const` 构造函数优化性能
+- 拆分大型 Widget 为小组件
+
+### 网络请求规范
+- 所有 API 调用放在 `services/` 目录
+- 使用 `async/await` 处理异步
+- 正确处理异常和错误状态
+- API 基础 URL: `http://localhost:8080/api`
+
+## macOS 桌面开发注意事项
+
+### 网络权限
+已在 `macos/Runner/*.entitlements` 中配置：
+- `com.apple.security.network.client` = true
+
+### 构建问题（Intel Mac）
+由于架构兼容性问题，使用以下命令构建：
+```bash
+# 清理并重新构建
+./run_flutter.sh clean
+
+# 仅构建
+arch -x86_64 flutter build macos
+
+# 运行应用
+./run_flutter.sh run
+```
+
+### 热重载限制
+macOS 桌面应用的热重载可能不完全生效，修改代码后建议：
+1. 执行 `flutter clean`
+2. 重新构建应用
+
+## 常用命令
+```bash
+# 使用项目脚本（推荐）
+./run_flutter.sh clean   # 清理并重新构建运行
+./run_flutter.sh build   # 仅构建
+./run_flutter.sh run     # 构建并运行
+
+# 原生 Flutter 命令
+flutter pub get          # 获取依赖
+flutter clean            # 清理构建缓存
+flutter analyze          # 代码分析
+```
+
+## 与后端集成
+- 确保后端服务运行在 `http://localhost:8080`
+- API 返回 JSON，字段使用驼峰命名
+- 处理网络错误时显示友好提示

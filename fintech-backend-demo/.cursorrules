@@ -1,0 +1,68 @@
+# Fintech Backend 项目规则
+
+## 项目概述
+这是一个金融科技演示项目的后端服务，使用 Spring Boot 构建。
+
+## 技术栈
+- Java 8+
+- Spring Boot 2.x
+- Spring Data JPA
+- H2 内存数据库（开发环境）
+- Maven 构建工具
+
+## 项目结构
+```
+src/main/java/com/demo/fintech/
+├── controller/    # REST API 控制器
+├── entity/        # JPA 实体类
+├── repository/    # 数据访问层
+├── service/       # 业务逻辑层
+└── FintechApplication.java  # 启动类
+```
+
+## 编码规范
+
+### Java 代码风格
+- 使用驼峰命名法（camelCase）
+- 类名使用大驼峰（PascalCase）
+- 常量使用全大写下划线分隔（UPPER_SNAKE_CASE）
+- 每个类应有明确的单一职责
+
+### JPA 实体规范
+- 实体类使用 `@Entity` 注解
+- 表名使用小写下划线命名（如 `users`）
+- 字段默认值在实体类中初始化
+- 使用 `@Column` 注解明确列名映射
+
+### REST API 规范
+- 使用 RESTful 风格
+- 路径使用小写，复数形式（如 `/api/users`）
+- 返回适当的 HTTP 状态码
+- 直接返回实体或使用 DTO
+
+### 数据库
+- 使用 H2 内存数据库，每次重启数据重置
+- 初始数据通过 `src/main/resources/data.sql` 加载
+- 需要在 `application.properties` 中启用 SQL 初始化
+
+## 常用命令
+```bash
+# 启动服务
+mvn spring-boot:run
+
+# 构建项目
+mvn clean package
+
+# 运行测试
+mvn test
+```
+
+## API 端点
+- `GET /api/users` - 获取所有用户
+- `POST /api/users` - 创建用户
+- H2 控制台: `http://localhost:8080/h2-console`
+
+## 注意事项
+- H2 是内存数据库，重启后数据丢失
+- 修改实体后需重启服务
+- JSON 序列化使用 Jackson，字段名自动转为驼峰
