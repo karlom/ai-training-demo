@@ -21,6 +21,20 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User freezeUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("用户不存在，ID: " + id));
+        user.setStatus("FROZEN");
+        return userRepository.save(user);
+    }
+
+    public User unfreezeUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("用户不存在，ID: " + id));
+        user.setStatus("ACTIVE");
+        return userRepository.save(user);
+    }
+
     // TODO: 演示 2.2 - 选中这个类，让 AI 实现 freezeUser(Long userId) 逻辑
     // 要求：修改状态，并抛出异常如果用户不存在
 }

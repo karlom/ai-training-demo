@@ -14,9 +14,9 @@ class UserService {
         // 过滤掉空对象和无效数据
         final List<User> users = [];
         for (var jsonItem in jsonList) {
-          if (jsonItem is Map<String, dynamic> && 
-              jsonItem['id'] != null && 
-              jsonItem['username'] != null && 
+          if (jsonItem is Map<String, dynamic> &&
+              jsonItem['id'] != null &&
+              jsonItem['username'] != null &&
               jsonItem['balance'] != null) {
             try {
               users.add(User.fromJson(jsonItem));
@@ -68,5 +68,38 @@ class UserService {
       throw Exception('Error creating user: $e');
     }
   }
-}
 
+  // 冻结用户
+  static Future<User> freezeUser(int id) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/$id/freeze'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        return User.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Failed to freeze user: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error freezing user: $e');
+    }
+  }
+
+  // 解冻用户
+  static Future<User> unfreezeUser(int id) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/$id/unfreeze'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        return User.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Failed to unfreeze user: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error unfreezing user: $e');
+    }
+  }
+}

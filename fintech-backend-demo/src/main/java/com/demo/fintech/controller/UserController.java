@@ -24,5 +24,15 @@ public class UserController {
         return userService.createUser(user);
     }
 
+    @PostMapping("/{id}/freeze")
+    public User freezeUser(@PathVariable Long id) {
+        return userService.freezeUser(id);
+    }
+
+    @PostMapping("/{id}/unfreeze")
+    public User unfreezeUser(@PathVariable Long id) {
+        return userService.unfreezeUser(id);
+    }
+
     // TODO: 演示 2.2 - 让 AI 自动生成 /api/users/{id}/freeze 接口
 }

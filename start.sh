@@ -111,6 +111,10 @@ start_frontend() {
     echo "[Frontend] Building and launching Flutter app..."
     cd "$SCRIPT_DIR/fintech-flutter-demo"
 
+    # Clean Flutter cache to ensure fresh build with latest code changes
+    echo "[Frontend] Cleaning Flutter cache..."
+    flutter clean
+
     # Install dependencies
     echo "[Frontend] Installing dependencies..."
     flutter pub get
